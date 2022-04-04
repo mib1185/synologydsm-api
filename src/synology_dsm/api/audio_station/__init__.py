@@ -30,7 +30,7 @@ class SynoAudioStation:
         """Initialize Audio Station."""
         self._dsm = dsm
 
-    def get_player_status(self, player_uuid) -> RemotePlayerStatus:
+    def remote_player_get_player_status(self, player_uuid) -> RemotePlayerStatus:
         """Get status of remote player"""
         res = self._dsm.get(
             self.REMOTE_PLAYER_STATUS_KEY,
@@ -42,7 +42,7 @@ class SynoAudioStation:
         )
         return RemotePlayerStatus(res)
 
-    def get_players(self) -> PlayerList:
+    def remote_player_get_players(self) -> PlayerList:
         """Get list of remote players"""
         res = self._dsm.get(
             self.REMOTE_PLAYER_KEY,
@@ -55,7 +55,7 @@ class SynoAudioStation:
 
         return PlayerList(res["data"])
 
-    def remote_current_playlist(self, player_uuid: str) -> Playlist:
+    def remote_player_get_current_playlist(self, player_uuid: str) -> Playlist:
         """Get current playlist of player"""
         opts = {
             "id": "uuid:" + player_uuid,
@@ -76,7 +76,7 @@ class SynoAudioStation:
             "version": 3,
         }
 
-        current = self.remote_current_playlist(player_uuid)
+        current = self.remote_player_get_current_playlist(player_uuid)
 
         if playlist_queue_mode == QueueMode.replace:
             base_opts["offset"] = 0
